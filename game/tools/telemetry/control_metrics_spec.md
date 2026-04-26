@@ -1,61 +1,58 @@
 # Control Metrics Telemetry Spec
 
 ## Scope
-Defines control/usability metrics to track during control tuning and smoke validation sessions.
+Defines control/usability metrics to track during tuning and smoke validation sessions.
 
-## Event/session metadata
-- session_id
-- build_id / commit_hash
-- map_id
-- tester_id (or anonymized subject_id)
-- input_device (keyboard+mouse / gamepad / other)
-- timestamp_utc
+## Required session metadata
+- `session_id`
+- `build_id`
+- `commit_hash`
+- `map_id`
+- `tester_id` (or anonymized `subject_id`)
+- `input_device` (`keyboard_mouse`, `gamepad`, `other`)
+- `started_at_utc`
+- `ended_at_utc`
 
 ## Required tracked metrics
 
 ### 1) Slalom completion time
 - **Metric key:** `slalom_completion_time_ms`
 - **Type:** Numeric (milliseconds)
-- **Definition:** Time elapsed from crossing slalom start gate to crossing finish gate.
-- **Aggregation:** mean, median, p90 by build and device.
-- **Goal direction:** Lower is better (within acceptable control/readability constraints).
+- **Definition:** Time from crossing slalom start gate to crossing finish gate.
+- **Capture point:** End of slalom run.
+- **Goal direction:** Lower is better (without increasing frustration).
 
 ### 2) Collision frustration count
 - **Metric key:** `collision_frustration_count`
 - **Type:** Integer count per run
-- **Definition:** Number of collisions categorized as frustrating (cone, wall, obstacle) during slalom and benchmark traversal.
-- **Classification note:** Should align with manual frustration rubric where possible.
-- **Aggregation:** total and average per session/build.
+- **Definition:** Number of collisions marked frustrating during slalom + station traversal.
+- **Capture point:** Increment on each qualifying collision event.
 - **Goal direction:** Lower is better.
 
 ### 3) Missed interaction attempts
 - **Metric key:** `missed_interaction_attempts`
-- **Type:** Integer count per station and per run
-- **Definition:** Interaction inputs that do not produce intended valid target action (inspect, pickup/place, reactivation).
-- **Aggregation:** total, per-station average, p90.
+- **Type:** Integer count (per station and total)
+- **Definition:** Interaction input that does not trigger intended valid action (inspect, pickup/place, reactivation).
+- **Capture point:** Increment on interaction failure result.
 - **Goal direction:** Lower is better.
 
 ### 4) Subjective ratings (1-5)
-Collect once at end of session:
+Capture once at end of session:
+- `subjective_responsiveness_rating`
+- `subjective_readability_rating`
+- `subjective_comfort_rating`
 
-- **Responsiveness**
-  - `subjective_responsiveness_rating`
-- **Readability**
-  - `subjective_readability_rating`
-- **Comfort**
-  - `subjective_comfort_rating`
-
-**Type:** Integer (1-5 Likert)
+**Type:** Integer Likert (1-5)
 - 1 = very poor
 - 3 = acceptable
 - 5 = excellent
 
-**Aggregation:** mean and distribution histogram by build/device.
-
-## Suggested derived KPI bundle
-- `control_quality_index` (optional composite): weighted blend of normalized completion time, missed attempts, and subjective ratings.
+## Required aggregations
+- By `build_id` + `input_device`: mean, median, p90 for timing and counts.
+- Histogram distribution for each subjective rating.
 
 ## Data quality checks
-- Reject sessions missing start or finish timestamps for slalom.
-- Clamp subjective ratings outside 1-5 as invalid.
-- Flag runs with impossible negative durations.
+- Reject session if start/finish timestamps are missing for slalom.
+- Reject durations `< 0`.
+- Reject subjective rating samples outside `1..5` (do not clamp).
+- Reject interaction metrics if station identifier is missing.

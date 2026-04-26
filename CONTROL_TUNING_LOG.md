@@ -1,7 +1,12 @@
 # Control Tuning Log
 
-Use this log to track every gameplay control tuning change and its measured impact.
+Use this log to track every gameplay control tuning change and measured impact.
 
-| Date | Parameter changed | Old value | New value | Reason | Metric impact |
+## Rules
+- Record one parameter change per row.
+- Use ISO date format (`YYYY-MM-DD`).
+- Include at least one metric delta in `Metric impact` (for example: `slalom_completion_time_ms -185`).
+
+| Date (YYYY-MM-DD) | Parameter changed | Old value | New value | Reason | Metric impact |
 |---|---|---|---|---|---|
-| YYYY-MM-DD | Example: movement.acceleration | 8.0 | 9.5 | Improve responsiveness during short traversals | Slalom completion time: -4.2%; collisions: +1 |
+|  |  |  |  |  |  |

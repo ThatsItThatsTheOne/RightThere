@@ -1,15 +1,15 @@
 # Camera Tunable Parameters Manifest
 
-Engine-specific bindings to be defined later. This manifest documents tunable camera control variables.
+Engine-specific bindings will be added later. This manifest defines canonical parameter names and tuning intent.
 
-| Parameter ID | Description | Suggested Range | Default (placeholder) | Notes |
+| Parameter ID | Type | Suggested Range | Default (placeholder) | Description |
 |---|---|---|---|---|
-| camera.isometric_angle_deg | Downward isometric pitch angle in degrees | 25 - 60 | 40 | Lower values improve horizon visibility |
-| camera.smoothing_time_sec | Follow smoothing/interpolation time | 0.00 - 0.50 | 0.12 | Higher values reduce jitter but may feel laggy |
-| camera.rotate_enabled | Optional user-driven camera rotate toggle | false/true | false | Keep optional to preserve readability |
-| camera.rotate_speed_deg_per_sec | Rotation speed when rotate is enabled | 30 - 240 | 120 | Ignored when rotate is disabled |
+| camera.isometric_angle_deg | float | 25 - 60 | 40 | Downward isometric pitch angle in degrees |
+| camera.smoothing_time_sec | float | 0.00 - 0.50 | 0.12 | Follow smoothing/interpolation time |
+| camera.rotate_enabled | bool | false/true | false | Optional user-driven camera rotate toggle |
+| camera.rotate_speed_deg_per_sec | float | 30 - 240 | 120 | Rotation speed when rotate is enabled |
 
 ## Tuning notes
-- Validate readability impacts when changing angle.
-- If enabling rotation, test interaction target clarity at all headings.
-- Log all changes in `CONTROL_TUNING_LOG.md`.
+- Validate readability impacts after angle changes.
+- If `camera.rotate_enabled=true`, verify interaction target clarity at multiple headings.
+- Record every change in `CONTROL_TUNING_LOG.md`.

@@ -1,0 +1,30 @@
+version: 1
+system: interaction
+parameters:
+  - id: interaction.snap_to_enabled
+    type: bool
+    default: true
+    description: Enables snap-to on valid targets.
+  - id: interaction.assist_strength
+    type: float
+    default: 0.6
+    min: 0.0
+    max: 1.0
+    description: Strength of snap/aim assistance.
+  - id: interaction.highlight_mode
+    type: enum
+    default: outline
+    values: [none, outline, fill, both]
+    description: Target affordance style.
+  - id: interaction.highlight_intensity
+    type: float
+    default: 0.7
+    min: 0.0
+    max: 1.0
+    description: Visual highlight strength.
+  - id: interaction.highlight_fade_ms
+    type: int
+    default: 120
+    min: 0
+    max: 500
+    description: Highlight transition duration in milliseconds.
