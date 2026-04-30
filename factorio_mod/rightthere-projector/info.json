@@ -1,0 +1,9 @@
+{
+  "name": "rightthere-projector",
+  "version": "0.1.0",
+  "title": "RightThere Projector",
+  "author": "RightThere",
+  "factorio_version": "2.0",
+  "description": "Projector screen that can play bundled PNG images or frame-based pseudo-video clips converted offline.",
+  "dependencies": ["base >= 2.0.0"]
+}
